@@ -23,15 +23,15 @@ J'ai vérifié que cristaux est déclarée en haut de jeu.js (let cristaux = 0;)
 Comment j'ai vérifié que ça marche : node --check jeu.js ne signale aucune erreur. J'ai rechargé index.html, joué une partie, regardé le nombre de cristaux à l'écran de fin, puis lancé une deuxième partie pour voir qu'il repart de 0.
 ## Défi 2 - Ask
 
-- Ma question (prompt exact) :
-
+- Ma question (prompt exact) :Je suis en Bachelor 1, j'ai fait un peu de Go. Explique jeu.js : comment fonctionnent la boucle du jeu, la chute des objets et la détection de l'objet attrapé ? Une phrase par partie.
+2 eme Comment le combo est-il remis à zéro dans jeu.js ?
 ```
 (colle-le ici)
 ```
 
-- Une affirmation de la réponse que j'ai vérifiée :
-- Comment je l'ai vérifiée (un changement dans le code, un test dans le jeu) :
-- Résultat : exacte, fausse ou incomplète :
+- Une affirmation de la réponse que j'ai vérifiée :Après une perte de vie : dans perdreVie, le combo et son chrono sont immédiatement remis à zéro, notamment lorsqu'une bombe est attrapée ou qu'un cristal tombe.
+- Comment je l'ai vérifiée (un changement dans le code, un test dans le jeu) :j'ai ajouté console.log("perdreVie : combo avant =", combo); au début de perdreVie, ouvert la console (F12), atteint x2 avec 3 cristaux de suite, puis attrapé une bombe et raté un cristal. [A COMPLETER : ce que la console et le HUD ont montré, ex. "le message affichait combo = 3 et le HUD est repassé à x1".] J'ai ensuite retiré le console.log.
+- Résultat : exacte, fausse ou incomplète :Copilot oublie que demarrerPartie remet aussi le combo à zéro, et qu'un cristal doré raté n'appelle pas perdreVie donc ne remet pas le combo à zéro.
 
 ## Défi 3 - Plan
 
