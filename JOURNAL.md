@@ -70,6 +70,8 @@ J'ai vérifié que la rareté et la durée du ralentissement sont dans `config.j
 J'ai corrigé le code car `chronoGlace` était utilisé sans être déclaré. J'ai aussi vérifié que le cristal de glace avait une couleur différente dans `dessin.js`.
 
 - Mon deuxième prompt :
+
+```
 Objectif :
 Ajouter un bouclier qui absorbe la prochaine bombe et l'afficher dans le HUD.
 
@@ -79,11 +81,24 @@ Le jeu est un jeu d'arcade spatial où le joueur attrape des cristaux qui tomben
 Contraintes :
 Le bouclier doit être obtenu en attrapant un nouvel objet rare et absorber une seule bombe. Sa rareté doit être réglable dans `config.js`. Respecte les règles de `.github/copilot-instructions.md`.
 
+Format attendu :
+Modifie les fichiers nécessaires, lance node --check sur les fichiers JavaScript modifiés et explique les tests à effectuer.
+```
+
+- Prompt court après la mise à jour des instructions :
+
+```
+Relis .github/copilot-instructions.md et vérifie que les changements du bouclier respectent bien le thème spatial néon et les règles du projet. Corrige uniquement ce qui ne les respecte pas, puis lance node --check.
+```
+
 - Fichiers modifiés pour le bouclier :
 `config.js`, `jeu.js`, `dessin.js`, `index.html`, `style.css` et `.github/copilot-instructions.md`.
 
 - Ce que j'ai relu :
 J'ai vérifié que le HUD affiche « BOUCLIER ACTIF » après l'obtention et « BOUCLIER VIDE » après l'utilisation. Le test doit être fait après avoir attrapé le bouclier : la bombe protégée ne retire pas de vie, puis la bombe suivante retire bien une vie.
+
+- Ce que j'ai refusé, corrigé ou fait refaire :
+J'ai corrigé le traitement de la bombe en séparant l'absorption dans une fonction `absorberBombe`. Cela garantit qu'un bouclier actif est consommé sans appeler `perdreVie`; j'ai aussi remis la rareté temporairement augmentée à `0.01` après le test.
 
 - Mon jeu après l'agent :
 Le jeu démarre dans le navigateur et le HUD affiche l'état du bouclier.
