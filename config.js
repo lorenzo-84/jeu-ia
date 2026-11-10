@@ -9,6 +9,7 @@ const CRISTAL = "cristal";
 const BOMBE = "bombe";
 const DORE = "dore";
 const GLACE = "glace";
+const BOUCLIER = "bouclier";
 
 const COULEURS = {
   fond: "#05030f",
@@ -16,6 +17,7 @@ const COULEURS = {
   magenta: "#ff3ea5",
   or: "#ffd166",
   glace: "#a5d8ff",
+  bouclier: "#b388ff",
   rouge: "#ff4d6d",
   blanc: "#f5f7ff",
   grille: "rgba(40, 240, 255, 0.16)"
@@ -34,6 +36,7 @@ const REGLAGES = {
   hasardBombe: 0.14,
   hasardDore: 0.05,
   hasardGlace: 0.02,     // rareté du cristal de glace (plus rare que le doré)
+  hasardBouclier: 0.01,  // rareté du bouclier
   dureeGlace: 4,         // secondes de ralentissement
   facteurGlace: 0.4,     // vitesse de chute pendant le ralentissement
   largeurPanier: 96,

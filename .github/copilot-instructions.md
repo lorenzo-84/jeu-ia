@@ -20,6 +20,8 @@ Ce fichier est lu automatiquement par Copilot quand il travaille sur ce dépôt.
 - Garde le JavaScript total sous 600 lignes et ne duplique pas une fonction existante.
 - Ne renomme pas et ne réorganise pas le code existant sans que je le demande.
 - Les accès à `localStorage` restent protégés par `try` et `catch`.
+- Le thème du jeu est une pluie de cristaux dans un univers spatial néon.
+- Les nouveaux objets doivent rester cohérents avec ce thème et leurs réglages doivent rester dans `config.js`.
 
 ## Quand tu modifies le code
 
