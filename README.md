@@ -8,6 +8,8 @@ Déplace le rail néon en bas de l'écran et attrape les cristaux qui tombent. �
 
 - Cristal cyan : 10 points.
 - Cristal doré, plus rare : 50 points.
+- Cristal de glace, très rare : ralentit les objets pendant 4 secondes.
+- Cristal bouclier, très rare : absorbe la prochaine bombe.
 - Bombe : tu perds une vie et ton combo retombe à zéro.
 - Trois vies au départ.
 - Le combo reste actif 3 secondes. À partir de 3 cristaux, le multiplicateur passe à x2, puis x3, x4 et x5.
@@ -19,6 +21,10 @@ Déplace le rail néon en bas de l'écran et attrape les cristaux qui tombent. �
 Ouvre `index.html` dans un navigateur récent. Il n'y a ni serveur, ni installation, ni build.
 
 Pour publier sur GitHub Pages : dans le dépôt, **Settings**, **Pages**, **Deploy from a branch**, branche `main`, dossier `/ (root)`, puis **Save**. L'adresse du jeu apparaît après une à deux minutes.
+
+## Jeu publié
+
+À compléter après la publication sur GitHub Pages : `https://lorenzo-84.github.io/jeu-ia/`
 
 ## Commandes
 

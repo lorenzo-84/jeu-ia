@@ -11,6 +11,7 @@ const elementCombo = document.getElementById("combo");
 const elementComboValeur = document.getElementById("combo-valeur");
 const elementComboJauge = document.getElementById("combo-jauge");
 const elementVies = document.getElementById("vies").getElementsByTagName("i");
+const elementBouclier = document.getElementById("bouclier");
 const boutonSon = document.getElementById("bouton-son");
 const boutonJouer = document.getElementById("bouton-jouer");
 const boutonRejouer = document.getElementById("bouton-rejouer");
@@ -21,12 +22,15 @@ const badgeRecord = document.getElementById("badge-record");
 // L'état de la partie.
 let etat = "titre";
 let score = 0;
+let cristaux = 0;
 let record = 0;
 let vies = REGLAGES.viesDepart;
 let niveau = 1;
 let tempsJeu = 0;
 let combo = 0;
 let chronoCombo = 0;
+let chronoGlace = 0;
+let bouclier = false;
 let objets = [];
 let chronoSpawn = 0;
 let dernierTemps = 0;
@@ -47,6 +51,8 @@ function majHud() {
   elementNiveau.textContent = "NIVEAU " + niveau;
   elementComboValeur.textContent = "x" + multiplicateur();
   elementCombo.classList.toggle("fort", multiplicateur() > 1);
+  elementBouclier.textContent = bouclier ? "BOUCLIER ACTIF" : "BOUCLIER VIDE";
+  elementBouclier.classList.toggle("actif", bouclier);
   for (let i = 0; i < elementVies.length; i++) {
     elementVies[i].classList.toggle("perdue", i >= vies);
   }
@@ -56,8 +62,8 @@ function majHud() {
 function demarrerPartie() {
   preparerAudio();
   etat = "jeu";
-  score = 0; vies = REGLAGES.viesDepart; niveau = 1; tempsJeu = 0;
-  combo = 0; chronoCombo = 0; objets = []; chronoSpawn = 0.45;
+  score = 0; vies = REGLAGES.viesDepart; niveau = 1; tempsJeu = 0; cristaux = 0;
+  combo = 0; chronoCombo = 0; chronoGlace = 0; bouclier = false; objets = []; chronoSpawn = 0.45;
   panier.x = LARGEUR / 2 - panier.largeur / 2; panier.cibleX = null; panier.vitesse = 0;
   ecranTitre.classList.add("cache");
   ecranFin.classList.add("cache");
@@ -73,6 +79,7 @@ function terminerPartie() {
   secouer(20);
   flasher(COULEURS.blanc, 0.4);
   finScore.textContent = score;
+  //afficher le nombre de cristaux attrapés à la fin de la partie
   finRecord.textContent = record;
   badgeRecord.classList.toggle("cache", !nouveauRecord);
   scene.dataset.etat = "fin";
@@ -84,8 +91,10 @@ function creerObjet() {
   const tirage = Math.random();
   let type = CRISTAL;
   if (tirage < Math.min(0.42, REGLAGES.hasardBombe + (niveau - 1) * 0.03)) type = BOMBE;
-  else if (tirage > 1 - REGLAGES.hasardDore) type = DORE;
-  const rayon = type === DORE ? 17 : type === BOMBE ? 15 : 13;
+  else if (tirage > 1 - REGLAGES.hasardBouclier) type = BOUCLIER;
+  else if (tirage > 1 - REGLAGES.hasardBouclier - REGLAGES.hasardGlace) type = GLACE;
+  else if (tirage > 1 - REGLAGES.hasardBouclier - REGLAGES.hasardGlace - REGLAGES.hasardDore) type = DORE;
+  const rayon = type === DORE ? 17 : type === GLACE || type === BOUCLIER ? 15 : type === BOMBE ? 15 : 13;
   const vitesse = Math.min(REGLAGES.vitesseChuteMax, REGLAGES.vitesseChute + (niveau - 1) * 28);
   objets.push({
     type: type, x: hasard(rayon + 12, LARGEUR - rayon - 12), y: -rayon - 8, rayon: rayon,
@@ -111,8 +120,19 @@ function estAttrape(objet) {
     objet.x + objet.rayon * 0.5 >= panier.x &&
     objet.x - objet.rayon * 0.5 <= panier.x + panier.largeur;
 }
+function absorberBombe(objet) {
+  bouclier = false;
+  creerParticules(objet.x, objet.y, COULEURS.bouclier, 28, 320);
+  ajouterTexte(objet.x, objet.y - 10, "BOUCLIER UTILISE", COULEURS.bouclier);
+  sonCristal(1);
+  majHud();
+}
 function toucherObjet(objet) {
   if (objet.type === BOMBE) {
+    if (bouclier) {
+      absorberBombe(objet);
+      return;
+    }
     creerParticules(objet.x, objet.y, COULEURS.magenta, 28, 320);
     perdreVie(objet.x, objet.y, true);
     return;
@@ -121,11 +141,17 @@ function toucherObjet(objet) {
   chronoCombo = REGLAGES.dureeCombo;
   const multi = multiplicateur();
   const points = (objet.type === DORE ? 50 : 10) * multi;
-  const couleur = objet.type === DORE ? COULEURS.or : COULEURS.cyan;
+  const couleur = objet.type === DORE ? COULEURS.or : objet.type === GLACE ? COULEURS.glace : objet.type === BOUCLIER ? COULEURS.bouclier : COULEURS.cyan;
   score += points;
+  // compte les cristaux attrapés dans la variable cristaux
+  if (objet.type === CRISTAL) { cristaux += 1; }
+  // Le cristal de glace ralentit tous les objets pendant quelques secondes.
+  if (objet.type === GLACE) chronoGlace = REGLAGES.dureeGlace;
+  if (objet.type === BOUCLIER) bouclier = true;
   creerParticules(objet.x, objet.y, couleur, objet.type === DORE ? 24 : 14, 280);
   ajouterTexte(objet.x, objet.y - 10, "+" + points, couleur);
   if (objet.type === DORE) { sonDore(); flasher(COULEURS.or, 0.18); }
+  else if (objet.type === BOUCLIER) { sonCristal(multi); flasher(COULEURS.bouclier, 0.14); }
   else { sonCristal(multi); flasher(COULEURS.cyan, 0.06); }
   secouer(3);
 }
@@ -158,6 +184,10 @@ function mettreAJour(dt) {
     chronoCombo -= dt;
     if (chronoCombo <= 0) { chronoCombo = 0; combo = 0; }
   }
+  if (chronoGlace > 0) {
+    chronoGlace -= dt;
+    if (chronoGlace < 0) chronoGlace = 0;
+  }
   majPanier(dt);
   chronoSpawn -= dt;
   if (chronoSpawn <= 0) {
@@ -166,10 +196,10 @@ function mettreAJour(dt) {
   }
   for (let i = objets.length - 1; i >= 0; i--) {
     const objet = objets[i];
-    objet.y += objet.vitesse * dt;
+    objet.y += objet.vitesse * dt * (chronoGlace > 0 ? REGLAGES.facteurGlace : 1);
     objet.rotation += objet.vitesseRotation * dt;
-    if (objet.type === DORE && Math.random() < dt * 18) {
-      creerParticules(objet.x, objet.y, COULEURS.or, 1, 30);
+    if ((objet.type === DORE || objet.type === BOUCLIER) && Math.random() < dt * 18) {
+      creerParticules(objet.x, objet.y, objet.type === DORE ? COULEURS.or : COULEURS.bouclier, 1, 30);
     }
     if (estAttrape(objet)) {
       objets.splice(i, 1);
@@ -178,6 +208,7 @@ function mettreAJour(dt) {
       objets.splice(i, 1);
       if (objet.type === CRISTAL) perdreVie(objet.x, HAUTEUR - 30, false);
       else if (objet.type === DORE) ajouterTexte(objet.x, HAUTEUR - 40, "CRISTAL DORÉ PERDU", COULEURS.or);
+      else if (objet.type === BOUCLIER) ajouterTexte(objet.x, HAUTEUR - 40, "BOUCLIER PERDU", COULEURS.bouclier);
     }
   }
   majHud();
