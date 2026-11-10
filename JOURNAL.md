@@ -109,13 +109,16 @@ Le jeu démarre dans le navigateur et le HUD affiche l'état du bouclier.
 
 ## Défi 5 - Pull request et revue
 
-- Lien de ma pull request :
-- Commentaire de la revue Copilot que j'ai traité (le texte) :
-- Ma décision (corrigé ou refusé) et pourquoi :
-- Lien de mon jeu publié :
+- Lien de ma pull request : à compléter après la création sur GitHub.
+- Commentaire de la revue Copilot que j'ai traité (le texte) : à copier depuis la revue GitHub.
+- Ma décision (corrigé ou refusé) et pourquoi : à compléter après la revue.
+- Lien de mon jeu publié : à compléter après l'activation de GitHub Pages.
 
 ## Bilan (3 lignes maximum)
 
 - Ce que l'assistant a fait mieux ou plus vite que moi :
+Il m'a aidé à organiser le plan et à relier la configuration, la logique du jeu et l'affichage.
 - Ce qu'il a mal fait ou ce que j'ai dû corriger :
+Le bouclier n'était pas assez facile à tester et j'ai dû vérifier son fonctionnement avec une probabilité temporairement augmentée.
 - Ce que je ne lui laisserais pas faire :
+Je ne lui laisserais pas fusionner une pull request ou publier le jeu sans relire les changements et tester le résultat.
