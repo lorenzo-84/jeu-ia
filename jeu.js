@@ -120,14 +120,17 @@ function estAttrape(objet) {
     objet.x + objet.rayon * 0.5 >= panier.x &&
     objet.x - objet.rayon * 0.5 <= panier.x + panier.largeur;
 }
+function absorberBombe(objet) {
+  bouclier = false;
+  creerParticules(objet.x, objet.y, COULEURS.bouclier, 28, 320);
+  ajouterTexte(objet.x, objet.y - 10, "BOUCLIER UTILISE", COULEURS.bouclier);
+  sonCristal(1);
+  majHud();
+}
 function toucherObjet(objet) {
   if (objet.type === BOMBE) {
     if (bouclier) {
-      bouclier = false;
-      creerParticules(objet.x, objet.y, COULEURS.bouclier, 28, 320);
-      ajouterTexte(objet.x, objet.y - 10, "BOUCLIER UTILISE", COULEURS.bouclier);
-      sonCristal(1);
-      majHud();
+      absorberBombe(objet);
       return;
     }
     creerParticules(objet.x, objet.y, COULEURS.magenta, 28, 320);

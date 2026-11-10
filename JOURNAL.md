@@ -45,18 +45,52 @@ objets ralentissent pendant 4 secondes, puis reprennent leur vitesse. Respecte l
 - Ce que j'ai changé dans le plan avant de le valider (étape retirée, ajoutée, contrainte) et pourquoi :
 J'ai regroupé les étapes concernant le ralentissement et le retour à la vitesse normale, car elles décrivaient le même fonctionnement. J'ai ajouté la contrainte que la durée de 4 secondes doit être réglable dans `config.js`, afin de respecter l'organisation du projet. J'ai aussi ajouté une section « Comment vérifier dans le jeu » pour décrire les tests à effectuer.
 
+
 ## Défi 4 - Agent
 
 - Mon prompt en mode Agent :
 
-```
-(colle-le ici)
-```
+Applique le plan décrit dans PLAN.md.
+
+Objectif :
+Ajouter le cristal de glace, plus rare que le cristal doré, qui ralentit tous les objets pendant 4 secondes quand il est attrapé.
+
+Contraintes :
+Respecte .github/copilot-instructions.md, garde le code simple, conserve les réglages dans config.js et ne modifie pas les fichiers sans rapport.
+
+Après les modifications, lance node --check sur chaque fichier JavaScript modifié et indique les fichiers changés.
 
 - Fichiers que l'agent a modifiés :
+`config.js`, `jeu.js`, `dessin.js`.
+
 - Ce que j'ai relu dans les changements avant d'accepter :
+J'ai vérifié que la rareté et la durée du ralentissement sont dans `config.js`, que le chronomètre est remis à zéro au début d'une partie et que le ralentissement dure 4 secondes.
+
 - Ce que j'ai refusé, corrigé ou fait refaire :
-- Mon jeu après l'agent (une phrase) :
+J'ai corrigé le code car `chronoGlace` était utilisé sans être déclaré. J'ai aussi vérifié que le cristal de glace avait une couleur différente dans `dessin.js`.
+
+- Mon deuxième prompt :
+Objectif :
+Ajouter un bouclier qui absorbe la prochaine bombe et l'afficher dans le HUD.
+
+Contexte :
+Le jeu est un jeu d'arcade spatial où le joueur attrape des cristaux qui tombent avec un panier.
+
+Contraintes :
+Le bouclier doit être obtenu en attrapant un nouvel objet rare et absorber une seule bombe. Sa rareté doit être réglable dans `config.js`. Respecte les règles de `.github/copilot-instructions.md`.
+
+- Fichiers modifiés pour le bouclier :
+`config.js`, `jeu.js`, `dessin.js`, `index.html`, `style.css` et `.github/copilot-instructions.md`.
+
+- Ce que j'ai relu :
+J'ai vérifié que le HUD affiche « BOUCLIER ACTIF » après l'obtention et « BOUCLIER VIDE » après l'utilisation. Le test doit être fait après avoir attrapé le bouclier : la bombe protégée ne retire pas de vie, puis la bombe suivante retire bien une vie.
+
+- Mon jeu après l'agent :
+Le jeu démarre dans le navigateur et le HUD affiche l'état du bouclier.
+
+- Commits réalisés :
+`defi 4 : cristal de glace`
+`defi 4 : bouclier`
 
 ## Défi 5 - Pull request et revue
 
