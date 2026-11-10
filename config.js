@@ -8,12 +8,14 @@ const HAUTEUR = 720; // hauteur logique du canvas
 const CRISTAL = "cristal";
 const BOMBE = "bombe";
 const DORE = "dore";
+const GLACE = "glace";
 
 const COULEURS = {
   fond: "#05030f",
   cyan: "#28f0ff",
   magenta: "#ff3ea5",
   or: "#ffd166",
+  glace: "#a5d8ff",
   rouge: "#ff4d6d",
   blanc: "#f5f7ff",
   grille: "rgba(40, 240, 255, 0.16)"
@@ -31,6 +33,9 @@ const REGLAGES = {
   multiplicateurMax: 5,
   hasardBombe: 0.14,
   hasardDore: 0.05,
+  hasardGlace: 0.02,     // rareté du cristal de glace (plus rare que le doré)
+  dureeGlace: 4,         // secondes de ralentissement
+  facteurGlace: 0.4,     // vitesse de chute pendant le ralentissement
   largeurPanier: 96,
   hauteurPanier: 16,
   margePanier: 12

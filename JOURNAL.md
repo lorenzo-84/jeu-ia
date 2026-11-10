@@ -37,12 +37,13 @@ Comment j'ai vérifié que ça marche : node --check jeu.js ne signale aucune er
 
 - Mon prompt en mode Plan :
 
-```
-(colle-le ici)
-```
+Je veux ajouter un cristal de glace, plus rare que le doré. Quand on l'attrape, tous les
+objets ralentissent pendant 4 secondes, puis reprennent leur vitesse. Respecte les règles de
+.github/copilot-instructions.md. Propose un plan sans modifier le code.
 
 - Le plan est dans le fichier `PLAN.md`.
 - Ce que j'ai changé dans le plan avant de le valider (étape retirée, ajoutée, contrainte) et pourquoi :
+J'ai regroupé les étapes concernant le ralentissement et le retour à la vitesse normale, car elles décrivaient le même fonctionnement. J'ai ajouté la contrainte que la durée de 4 secondes doit être réglable dans `config.js`, afin de respecter l'organisation du projet. J'ai aussi ajouté une section « Comment vérifier dans le jeu » pour décrire les tests à effectuer.
 
 ## Défi 4 - Agent
 
